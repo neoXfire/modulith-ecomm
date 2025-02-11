@@ -22,7 +22,7 @@ public class Order {
     @Column(nullable = false)
     private Instant createdOn;
 
-    @Column(nullable = false)
+    @Column
     private Instant cancelledOn;
 
     private Instant cartConfirmedOn;

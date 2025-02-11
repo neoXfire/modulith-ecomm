@@ -22,6 +22,7 @@ public class CartItem {
 
     public static CartItem of(Cart cart, UUID productId) {
         CartItem cartItem = new CartItem();
+        cartItem.setCartItemId(UUID.randomUUID());
         cartItem.setCart(cart);
         cartItem.setProductId(productId);
         return cartItem;

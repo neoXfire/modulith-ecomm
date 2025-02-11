@@ -42,6 +42,8 @@ public class OrderService {
     public UUID execute(InitNewOrderCommand __) {
         Cart cart = initCart();
         Order order = initOrder(cart);
+        cartDao.save(cart);
+        orderDao.save(order);
         return order.getOrderId();
     }
 
@@ -138,15 +140,17 @@ public class OrderService {
 
     private Cart initCart() {
         Cart cart = new Cart();
-        return cartDao.save(cart);
+        cart.setCartId(UUID.randomUUID());
+        return cart;
     }
 
     private Order initOrder(Cart cart) {
         Order order = new Order();
+        order.setOrderId(UUID.randomUUID());
         order.setCart(cart);
         order.setCreatedOn(Instant.now());
         order.setStatus(OrderStatus.CART_SELECTION);
-        return orderDao.save(order);
+        return order;
     }
 
     private InvalidTransitionException  noExistingEntryForProductInCartException() {
