@@ -1,8 +1,6 @@
 package fr.boursorama.modulith.ecomm.shipping;
 
 
-import fr.boursorama.modulith.ecomm.catalog.Product;
-import fr.boursorama.modulith.ecomm.catalog.ProductDao;
 import fr.boursorama.modulith.ecomm.InvalidTransitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,18 +17,19 @@ public class StockService {
     @Autowired
     private final StockEntryDao stockEntryDao;
 
-    @Autowired
-    private final ProductDao productDao;
-
-    public StockService(StockEntryDao stockEntryDao, ProductDao productDao) {
+    public StockService(StockEntryDao stockEntryDao) {
         this.stockEntryDao = stockEntryDao;
-        this.productDao = productDao;
+    }
+
+    public boolean isAvailable(UUID productId) {
+        return stockEntryDao.findByProductId(productId)
+                .map(stockEntry -> stockEntry.getQuantity() > 0)
+                .orElse(false);
     }
 
     public void execute(ProductResupplyCommand command) {
-        Product product = productDao.getReferenceById(command.productId());
-        StockEntry stockEntry = stockEntryDao.findByProduct(product)
-                .orElseGet(() -> initNewStockEntry(product));
+        StockEntry stockEntry = stockEntryDao.findByProductId(command.productId())
+                .orElseGet(() -> initNewStockEntry(command.productId()));
         int newQuantity = stockEntry.getQuantity() + command.quantity();
         stockEntry.setQuantity(newQuantity);
         stockEntry.setLastResupplyOn(Instant.now());
@@ -38,8 +37,7 @@ public class StockService {
     }
 
     public void updateStockForShippedProduct(UUID productId, int quantity) {
-        Product product = productDao.getReferenceById(productId);
-        Optional<StockEntry> stockEntry = stockEntryDao.findByProduct(product);
+        Optional<StockEntry> stockEntry = stockEntryDao.findByProductId(productId);
         boolean hasEnoughProductsInStock = stockEntry.map(StockEntry::getQuantity).orElse(0) >= quantity;
         if (!hasEnoughProductsInStock) {
             throw new InvalidTransitionException("There is no enough product in stock. Please resupply.");
@@ -49,10 +47,10 @@ public class StockService {
         stockEntryDao.save(updatedStockEntry);
     }
 
-    private StockEntry initNewStockEntry(Product product) {
+    private StockEntry initNewStockEntry(UUID productId) {
         StockEntry stockEntry = new StockEntry();
         stockEntry.setStockEntryId(UUID.randomUUID());
-        stockEntry.setProduct(product);
+        stockEntry.setProductId(productId);
         return stockEntry;
     }
 

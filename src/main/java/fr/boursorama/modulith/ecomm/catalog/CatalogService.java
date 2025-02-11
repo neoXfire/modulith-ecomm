@@ -1,6 +1,7 @@
 package fr.boursorama.modulith.ecomm.catalog;
 
 import fr.boursorama.modulith.ecomm.shipping.StockEntryDao;
+import fr.boursorama.modulith.ecomm.shipping.StockService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
@@ -18,13 +19,13 @@ public class CatalogService {
 
     private final ProductMappers productsMapper;
 
-    private final StockEntryDao stockEntryDao;
+    private final StockService stockService;
 
     @Autowired
-    public CatalogService(ProductDao productDao, ProductMappers productSummaryMapper, StockEntryDao stockEntryDao) {
+    public CatalogService(ProductDao productDao, ProductMappers productSummaryMapper, StockEntryDao stockEntryDao, StockService stockService) {
         this.productDao = productDao;
         this.productsMapper = productSummaryMapper;
-        this.stockEntryDao = stockEntryDao;
+        this.stockService = stockService;
     }
 
     public List<ProductSummaryDTO> listAllProducts() {
@@ -47,9 +48,7 @@ public class CatalogService {
     }
 
     private Pair<Product, Boolean> withAvailabilityInfo(Product product) {
-        boolean available = stockEntryDao.findByProduct(product)
-                .map(stockEntry -> stockEntry.getQuantity() > 0)
-                .orElse(false);
+        boolean available = stockService.isAvailable(product.getProductId());
         return Pair.of(product, available);
     }
 

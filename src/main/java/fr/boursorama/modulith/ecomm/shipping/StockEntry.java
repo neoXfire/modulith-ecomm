@@ -1,7 +1,8 @@
 package fr.boursorama.modulith.ecomm.shipping;
 
-import fr.boursorama.modulith.ecomm.catalog.Product;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -12,9 +13,8 @@ public class StockEntry {
     @Id
     private UUID stockEntryId;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "PRODUCT_ID", unique = true, nullable = false, updatable = false)
-    private Product product;
+    @Column(unique = true, nullable = false, updatable = false)
+    private UUID productId;
 
     private int quantity;
 
@@ -25,8 +25,8 @@ public class StockEntry {
         return stockEntryId;
     }
 
-    public Product getProduct() {
-        return product;
+    public UUID getProductId() {
+        return productId;
     }
 
     public int getQuantity() {
@@ -41,8 +41,8 @@ public class StockEntry {
         this.stockEntryId = stockEntryId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(UUID productId) {
+        this.productId = productId;
     }
 
     public void setQuantity(int quantity) {

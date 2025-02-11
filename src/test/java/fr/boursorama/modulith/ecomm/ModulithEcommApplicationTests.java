@@ -16,11 +16,11 @@ class ModulithEcommApplicationTests {
     }
 
     @Test
-    void checkModularity() {
+    void ensureModularityRules() {
         ApplicationModules modules = ApplicationModules.of(ModulithEcommApplication.class);
+        modules.forEach(System.out::println);
         modules.verify();
     }
-
 
 
 }
