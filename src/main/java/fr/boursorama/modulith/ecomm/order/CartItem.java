@@ -1,5 +1,6 @@
-package fr.boursorama.modulith.ecomm.persistence.entity;
+package fr.boursorama.modulith.ecomm.order;
 
+import fr.boursorama.modulith.ecomm.catalog.Product;
 import jakarta.persistence.*;
 
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package fr.boursorama.modulith.ecomm.service;
+package fr.boursorama.modulith.ecomm;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

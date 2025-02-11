@@ -1,13 +1,12 @@
-package fr.boursorama.modulith.ecomm.service;
+package fr.boursorama.modulith.ecomm.catalog;
 
-import fr.boursorama.modulith.ecomm.persistence.entity.Product;
-import fr.boursorama.modulith.ecomm.service.CatalogService.RegisterProductInCatalogCommand;
+import fr.boursorama.modulith.ecomm.catalog.CatalogService.RegisterProductInCatalogCommand;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 @Mapper
-interface ProductMappers {
+public interface ProductMappers {
 
     String SUMMARIZED = "summarized";
 

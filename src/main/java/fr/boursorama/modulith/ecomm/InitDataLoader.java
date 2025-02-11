@@ -1,7 +1,7 @@
 package fr.boursorama.modulith.ecomm;
 
-import fr.boursorama.modulith.ecomm.persistence.dao.ProductDao;
-import fr.boursorama.modulith.ecomm.persistence.entity.Product;
+import fr.boursorama.modulith.ecomm.catalog.ProductDao;
+import fr.boursorama.modulith.ecomm.catalog.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

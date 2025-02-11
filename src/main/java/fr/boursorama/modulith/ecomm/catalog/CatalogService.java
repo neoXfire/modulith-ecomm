@@ -1,8 +1,6 @@
-package fr.boursorama.modulith.ecomm.service;
+package fr.boursorama.modulith.ecomm.catalog;
 
-import fr.boursorama.modulith.ecomm.persistence.dao.ProductDao;
-import fr.boursorama.modulith.ecomm.persistence.dao.StockEntryDao;
-import fr.boursorama.modulith.ecomm.persistence.entity.Product;
+import fr.boursorama.modulith.ecomm.shipping.StockEntryDao;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;

@@ -1,4 +1,4 @@
-package fr.boursorama.modulith.ecomm.service;
+package fr.boursorama.modulith.ecomm.catalog;
 
 import java.util.UUID;
 

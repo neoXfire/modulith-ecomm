@@ -1,9 +1,6 @@
-package fr.boursorama.modulith.ecomm.controller;
+package fr.boursorama.modulith.ecomm.catalog;
 
 
-import fr.boursorama.modulith.ecomm.service.CatalogService;
-import fr.boursorama.modulith.ecomm.service.ProductDetailsDTO;
-import fr.boursorama.modulith.ecomm.service.ProductSummaryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

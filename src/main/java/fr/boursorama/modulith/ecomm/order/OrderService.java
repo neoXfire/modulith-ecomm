@@ -1,14 +1,10 @@
-package fr.boursorama.modulith.ecomm.service;
+package fr.boursorama.modulith.ecomm.order;
 
-import fr.boursorama.modulith.ecomm.persistence.dao.CartDao;
-import fr.boursorama.modulith.ecomm.persistence.dao.CartEntryDao;
-import fr.boursorama.modulith.ecomm.persistence.dao.OrderDao;
-import fr.boursorama.modulith.ecomm.persistence.dao.ProductDao;
-import fr.boursorama.modulith.ecomm.persistence.entity.Cart;
-import fr.boursorama.modulith.ecomm.persistence.entity.CartItem;
-import fr.boursorama.modulith.ecomm.persistence.entity.Order;
-import fr.boursorama.modulith.ecomm.persistence.entity.OrderStatus;
-import fr.boursorama.modulith.ecomm.persistence.entity.Product;
+import fr.boursorama.modulith.ecomm.catalog.ProductDao;
+import fr.boursorama.modulith.ecomm.catalog.Product;
+import fr.boursorama.modulith.ecomm.EntityNotFoundException;
+import fr.boursorama.modulith.ecomm.InvalidTransitionException;
+import fr.boursorama.modulith.ecomm.shipping.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

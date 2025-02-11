@@ -1,7 +1,6 @@
-package fr.boursorama.modulith.ecomm.persistence.dao;
+package fr.boursorama.modulith.ecomm.shipping;
 
-import fr.boursorama.modulith.ecomm.persistence.entity.Product;
-import fr.boursorama.modulith.ecomm.persistence.entity.StockEntry;
+import fr.boursorama.modulith.ecomm.catalog.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,11 +1,11 @@
-package fr.boursorama.modulith.ecomm.controller;
+package fr.boursorama.modulith.ecomm;
 
-import fr.boursorama.modulith.ecomm.service.CatalogService;
-import fr.boursorama.modulith.ecomm.service.CatalogService.RegisterProductInCatalogCommand;
-import fr.boursorama.modulith.ecomm.service.OrderService;
-import fr.boursorama.modulith.ecomm.service.OrderService.ShipOrderCommand;
-import fr.boursorama.modulith.ecomm.service.StockService;
-import fr.boursorama.modulith.ecomm.service.StockService.ProductResupplyCommand;
+import fr.boursorama.modulith.ecomm.catalog.CatalogService;
+import fr.boursorama.modulith.ecomm.catalog.CatalogService.RegisterProductInCatalogCommand;
+import fr.boursorama.modulith.ecomm.order.OrderService;
+import fr.boursorama.modulith.ecomm.order.OrderService.ShipOrderCommand;
+import fr.boursorama.modulith.ecomm.shipping.StockService;
+import fr.boursorama.modulith.ecomm.shipping.StockService.ProductResupplyCommand;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
