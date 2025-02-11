@@ -1,4 +1,4 @@
-package fr.boursorama.modulith.ecomm.order;
+package fr.boursorama.modulith.ecomm.order.impl;
 
 public enum OrderStatus {
     CART_SELECTION,

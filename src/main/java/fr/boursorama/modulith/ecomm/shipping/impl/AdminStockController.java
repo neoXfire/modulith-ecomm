@@ -1,4 +1,4 @@
-package fr.boursorama.modulith.ecomm.shipping;
+package fr.boursorama.modulith.ecomm.shipping.impl;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,16 +11,16 @@ import java.util.UUID;
 @SecurityRequirement(name = "basicAuth")
 public class AdminStockController {
 
-    private final StockService stockService;
+    private final StockServiceImpl stockServiceImpl;
 
     @Autowired
-    public AdminStockController(StockService stockService) {
-        this.stockService = stockService;
+    public AdminStockController(StockServiceImpl stockServiceImpl) {
+        this.stockServiceImpl = stockServiceImpl;
     }
 
     @PostMapping("/product/{productId}/stock/resupply")
     public void resupplyStock(@PathVariable UUID productId, @RequestParam int quantity) {
-        final var command = new StockService.ProductResupplyCommand(productId, quantity);
-        stockService.execute(command);
+        final var command = new StockServiceImpl.ProductResupplyCommand(productId, quantity);
+        stockServiceImpl.execute(command);
     }
 }

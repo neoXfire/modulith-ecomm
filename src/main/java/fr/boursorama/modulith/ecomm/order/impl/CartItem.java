@@ -1,6 +1,5 @@
-package fr.boursorama.modulith.ecomm.order;
+package fr.boursorama.modulith.ecomm.order.impl;
 
-import fr.boursorama.modulith.ecomm.catalog.Product;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -19,14 +18,12 @@ public class CartItem {
 
     private int quantity;
 
-    @ManyToOne
-    @JoinColumn(name="PRODUCT_ID")
-    private Product product;
+    private UUID productId;
 
-    public static CartItem of(Cart cart, Product product) {
+    public static CartItem of(Cart cart, UUID productId) {
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
-        cartItem.setProduct(product);
+        cartItem.setProductId(productId);
         return cartItem;
     }
 
@@ -54,11 +51,11 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public Product getProduct() {
-        return product;
+    public UUID getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(UUID productId) {
+        this.productId = productId;
     }
 }

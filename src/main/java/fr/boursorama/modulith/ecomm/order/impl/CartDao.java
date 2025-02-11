@@ -1,4 +1,4 @@
-package fr.boursorama.modulith.ecomm.order;
+package fr.boursorama.modulith.ecomm.order.impl;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

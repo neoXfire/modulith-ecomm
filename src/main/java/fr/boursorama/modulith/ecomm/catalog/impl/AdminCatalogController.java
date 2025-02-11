@@ -1,4 +1,4 @@
-package fr.boursorama.modulith.ecomm.catalog;
+package fr.boursorama.modulith.ecomm.catalog.impl;
 
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

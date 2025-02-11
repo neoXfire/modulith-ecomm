@@ -1,4 +1,4 @@
-package fr.boursorama.modulith.ecomm.catalog;
+package fr.boursorama.modulith.ecomm.catalog.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

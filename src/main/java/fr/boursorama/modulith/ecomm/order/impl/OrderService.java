@@ -1,9 +1,8 @@
-package fr.boursorama.modulith.ecomm.order;
+package fr.boursorama.modulith.ecomm.order.impl;
 
-import fr.boursorama.modulith.ecomm.catalog.ProductDao;
-import fr.boursorama.modulith.ecomm.catalog.Product;
 import fr.boursorama.modulith.ecomm.EntityNotFoundException;
 import fr.boursorama.modulith.ecomm.InvalidTransitionException;
+import fr.boursorama.modulith.ecomm.catalog.ProductService;
 import fr.boursorama.modulith.ecomm.shipping.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,24 +19,25 @@ public class OrderService {
 
     private final OrderDao orderDao;
 
-    private final CartEntryDao cartEntryDao;
-
-    private final ProductDao productDao;
-
+    private final CartItemDao cartItemDao;
+    private final ProductService productService;
     private final PaymentService paymentService;
-
     private final StockService stockService;
 
     @Autowired
-    public OrderService(CartDao cartDao, OrderDao orderDao, CartEntryDao cartEntryDao, ProductDao productDao, PaymentService paymentService, StockService stockService) {
+    public OrderService(CartDao cartDao,
+                        OrderDao orderDao,
+                        CartItemDao cartItemDao,
+                        ProductService productService,
+                        PaymentService paymentService,
+                        StockService stockService) {
         this.cartDao = cartDao;
         this.orderDao = orderDao;
-        this.cartEntryDao = cartEntryDao;
-        this.productDao = productDao;
+        this.cartItemDao = cartItemDao;
+        this.productService = productService;
         this.paymentService = paymentService;
         this.stockService = stockService;
     }
-
 
     public UUID execute(InitNewOrderCommand __) {
         Cart cart = initCart();
@@ -58,16 +58,15 @@ public class OrderService {
     public void execute(AddItemToCartCommand command) {
         Order order = orderDao.findById(command.orderId())
                 .orElseThrow(() -> EntityNotFoundException.of("order", "orderId"));
-        Product product = productDao.findById(command.productId())
-                .orElseThrow(() -> EntityNotFoundException.of("product", "productId"));
+        productService.ensureProductExists(command.productId());
         ensureOrderStatusIs(order, OrderStatus.CART_SELECTION,
                 "The cart cannot be modified because it has already been confirmed");
 
         Cart cart = order.getCart();
-        CartItem cartItem = cartEntryDao.findByCartAndProduct(cart, product)
-                .orElseGet(() -> CartItem.of(cart, product));
+        CartItem cartItem = cartItemDao.findByCartAndProductId(cart, command.productId())
+                .orElseGet(() -> CartItem.of(cart, command.productId()));
         cartItem.setQuantity(cartItem.getQuantity() + 1);
-        cartEntryDao.save(cartItem);
+        cartItemDao.save(cartItem);
     }
 
     public void execute(PayCommand command) {
@@ -90,18 +89,17 @@ public class OrderService {
     public void execute(RemoveItemFromCartCommand command) {
         Order order = orderDao.findById(command.orderId())
                 .orElseThrow(() -> EntityNotFoundException.of("order", "orderId"));
-        Product product = productDao.findById(command.productId())
-                .orElseThrow(() -> EntityNotFoundException.of("product", "productId"));
+        productService.ensureProductExists(command.productId());
         ensureOrderStatusIs(order, OrderStatus.CART_SELECTION,
                 "The cart cannot be modified because it has already been confirmed");
-        CartItem cartItem = cartEntryDao.findByCartAndProduct(order.getCart(), product)
+        CartItem cartItem = cartItemDao.findByCartAndProductId(order.getCart(), command.productId())
                 .orElseThrow(this::noExistingEntryForProductInCartException);
         int newQuantity = cartItem.getQuantity() - 1;
         if (newQuantity == 0) {
-            cartEntryDao.delete(cartItem);
+            cartItemDao.delete(cartItem);
         } else {
             cartItem.setQuantity(newQuantity);
-            cartEntryDao.save(cartItem);
+            cartItemDao.save(cartItem);
         }
     }
 
@@ -121,9 +119,9 @@ public class OrderService {
         ensureOrderStatusIs(order, OrderStatus.PAYMENT_CONFIRMED,
                 "The order can not be shiped because it has not been paid yet");
         for (CartItem cartEntry : order.getCart().getCartEntries()) {
-            Product product = cartEntry.getProduct();
+            UUID productId = cartEntry.getProductId();
             int quantity = cartEntry.getQuantity();
-            stockService.updateStockForShippedProduct(product.getProductId(), quantity);
+            stockService.updateStockForShippedProduct(productId, quantity);
         }
         order.setShippedOn(Instant.now());
         order.setStatus(OrderStatus.SHIPPED);

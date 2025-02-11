@@ -1,4 +1,4 @@
-package fr.boursorama.modulith.ecomm.catalog;
+package fr.boursorama.modulith.ecomm.catalog.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

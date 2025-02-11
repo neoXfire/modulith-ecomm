@@ -1,6 +1,6 @@
-package fr.boursorama.modulith.ecomm.order;
+package fr.boursorama.modulith.ecomm.order.impl;
 
-import fr.boursorama.modulith.ecomm.order.OrderService.*;
+import fr.boursorama.modulith.ecomm.order.impl.OrderService.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

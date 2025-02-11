@@ -1,6 +1,5 @@
-package fr.boursorama.modulith.ecomm.catalog;
+package fr.boursorama.modulith.ecomm.catalog.impl;
 
-import fr.boursorama.modulith.ecomm.shipping.StockEntryDao;
 import fr.boursorama.modulith.ecomm.shipping.StockService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class CatalogService {
     private final StockService stockService;
 
     @Autowired
-    public CatalogService(ProductDao productDao, ProductMappers productSummaryMapper, StockEntryDao stockEntryDao, StockService stockService) {
+    public CatalogService(ProductDao productDao, ProductMappers productSummaryMapper, StockService stockService) {
         this.productDao = productDao;
         this.productsMapper = productSummaryMapper;
         this.stockService = stockService;
