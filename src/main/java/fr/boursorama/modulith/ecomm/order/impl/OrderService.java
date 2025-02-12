@@ -76,8 +76,9 @@ public class OrderService {
                 .orElseThrow(() -> EntityNotFoundException.of("order", "orderId"));
         ensureOrderStatusIs(order, OrderStatus.CART_CONFIRMED,
                 "The specified order does not require a payment");
+        double totalPrice = computeTotalPrice(command.orderId());
         boolean paymentHasSucceeded = paymentService
-                .proceedWithPayment(command.nom(), command.numero(), command.dateExpiration(), command.ccv());
+                .proceedWithPayment(totalPrice, command.nom(), command.numero(), command.dateExpiration(), command.ccv());
         if (paymentHasSucceeded) {
             order.setStatus(OrderStatus.PAYMENT_CONFIRMED);
             order.setPaymentConfirmedOn(Instant.now());
@@ -128,6 +129,18 @@ public class OrderService {
         order.setShippedOn(Instant.now());
         order.setStatus(OrderStatus.SHIPPED);
         orderDao.save(order);
+    }
+
+    public double computeTotalPrice(UUID orderId) {
+        Order order = orderDao.findById(orderId)
+                .orElseThrow(() -> EntityNotFoundException.of("order", "orderId"));
+        Cart cart = order.getCart();
+        double price = 0.0;
+        for (CartItem cartEntry : cart.getCartEntries()) {
+            double productPrice = productService.getProductPrice(cartEntry.getProductId());
+            price += productPrice * cartEntry.getQuantity();
+        }
+        return price;
     }
 
     public void ensureOrderStatusIs(Order order, OrderStatus status, String errorMessage) {

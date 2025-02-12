@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class FakePaimentService implements PaymentService {
 
     @Override
-    public boolean proceedWithPayment(String nom, String numero, String s, String ccv) {
+    public boolean proceedWithPayment(double totalPrice, String nom, String numero, String s, String ccv) {
         double failDraw = Math.random();
         if (failDraw >= 0.9) {
             return false;

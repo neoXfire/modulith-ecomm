@@ -25,4 +25,11 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> EntityNotFoundException.of("product", "productId"));
 
     }
+
+    @Override
+    public double getProductPrice(UUID productId) {
+        return productDao.findById(productId)
+                .orElseThrow(() -> EntityNotFoundException.of("product", "productId"))
+                .getPrice();
+    }
 }

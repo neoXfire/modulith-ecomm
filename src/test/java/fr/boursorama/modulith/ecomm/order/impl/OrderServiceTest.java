@@ -73,7 +73,7 @@ class OrderServiceTest {
             final var command3 = new ConfirmCartCommand(orderId);
             orderService.execute(command3);
             final var command4 = new PayCommand(orderId, "nom", "numero", "dateExpiration", "ccv");
-            doReturn(true).when(paymentService).proceedWithPayment(any(), any(), any(), any());
+            doReturn(true).when(paymentService).proceedWithPayment(any(), any(), any(), any(), any());
             orderService.execute(command4);
 
             // When
