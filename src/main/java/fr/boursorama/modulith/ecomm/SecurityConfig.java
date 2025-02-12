@@ -2,6 +2,7 @@ package fr.boursorama.modulith.ecomm;
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -12,49 +13,47 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableWebSecurity
 @SecurityScheme(
-        type = SecuritySchemeType.HTTP,
-        name = "basicAuth",
-        scheme = "basic")
+		type = SecuritySchemeType.HTTP,
+		name = "basicAuth",
+		scheme = "basic")
 public class SecurityConfig {
 
-    public static final String OPEN_API_SECURED_TAG_NAME = "admin";
+	public static final String OPEN_API_SECURED_TAG_NAME = "admin";
 
-    @Bean
-    public UserDetailsManager users(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource);
-    }
+	@Bean
+	public UserDetailsManager users(DataSource dataSource) {
+		return new JdbcUserDetailsManager(dataSource);
+	}
 
-    @Bean
-    @Order(1)
-    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
-        http
-                .securityMatcher("/admin/**")
-                .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().authenticated()
-                )
-                .httpBasic(Customizer.withDefaults())
-                .formLogin(customizer -> customizer.disable())
-                .csrf(customizer -> customizer.disable())
-                .cors(customizer -> customizer.disable());
-        return http.build();
-    }
+	@Bean
+	@Order(1)
+	public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
+		http
+				.securityMatcher("/admin/**")
+				.authorizeHttpRequests(authorize -> authorize
+						.anyRequest().authenticated()
+				)
+				.httpBasic(Customizer.withDefaults())
+				.formLogin(customizer -> customizer.disable())
+				.csrf(customizer -> customizer.disable())
+				.cors(customizer -> customizer.disable());
+		return http.build();
+	}
 
-    @Bean
-    public SecurityFilterChain formLoginFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll()
-                )
-                .httpBasic(customizer -> customizer.disable())
-                .formLogin(customizer -> customizer.disable())
-                .csrf(customizer -> customizer.disable())
-                .cors(customizer -> customizer.disable());
-        return http.build();
-    }
+	@Bean
+	public SecurityFilterChain formLoginFilterChain(HttpSecurity http) throws Exception {
+		http
+				.authorizeHttpRequests(authorize -> authorize
+						.anyRequest().permitAll()
+				)
+				.httpBasic(customizer -> customizer.disable())
+				.formLogin(customizer -> customizer.disable())
+				.csrf(customizer -> customizer.disable())
+				.cors(customizer -> customizer.disable());
+		return http.build();
+	}
 
 }

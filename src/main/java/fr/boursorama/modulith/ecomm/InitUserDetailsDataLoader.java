@@ -15,30 +15,30 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class InitUserDetailsDataLoader implements ApplicationRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(InitUserDetailsDataLoader.class);
+	private static final Logger logger = LoggerFactory.getLogger(InitUserDetailsDataLoader.class);
 
-    private final UserDetailsManager userDetailsManager;
+	private final UserDetailsManager userDetailsManager;
 
-    @Autowired
-    public InitUserDetailsDataLoader(UserDetailsManager userDetailsManager) {
-        this.userDetailsManager = userDetailsManager;
-    }
+	@Autowired
+	public InitUserDetailsDataLoader(UserDetailsManager userDetailsManager) {
+		this.userDetailsManager = userDetailsManager;
+	}
 
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-        UserDetails adminUser = adminUser();
-        if (!userDetailsManager.userExists(adminUser.getUsername())) {
-            userDetailsManager.createUser(adminUser);
-        }
-        logger.info("User data initialized");
-    }
+	@Override
+	public void run(ApplicationArguments args) throws Exception {
+		UserDetails adminUser = adminUser();
+		if (!userDetailsManager.userExists(adminUser.getUsername())) {
+			userDetailsManager.createUser(adminUser);
+		}
+		logger.info("User data initialized");
+	}
 
-    private UserDetails adminUser() {
-        return User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("admin")
-                .roles("ADMIN")
-                .build();
-    }
+	private UserDetails adminUser() {
+		return User.withDefaultPasswordEncoder()
+				.username("admin")
+				.password("admin")
+				.roles("ADMIN")
+				.build();
+	}
 
 }

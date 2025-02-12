@@ -1,97 +1,101 @@
 package fr.boursorama.modulith.ecomm.order.internal;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name="PURCHASE_ORDER")
+@Table(name = "PURCHASE_ORDER")
 public class Order {
 
-    @Id
-    private UUID orderId;
+	@Id
+	private UUID orderId;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name="CART_ID")
-    private Cart cart;
+	@OneToOne(optional = false)
+	@JoinColumn(name = "CART_ID")
+	private Cart cart;
 
-    @Column(nullable = false)
-    private OrderStatus status;
+	@Column(nullable = false)
+	private OrderStatus status;
 
-    @Column(nullable = false)
-    private Instant createdOn;
+	@Column(nullable = false)
+	private Instant createdOn;
 
-    @Column
-    private Instant cancelledOn;
+	@Column
+	private Instant cancelledOn;
 
-    private Instant cartConfirmedOn;
+	private Instant cartConfirmedOn;
 
-    private Instant paymentConfirmedOn;
+	private Instant paymentConfirmedOn;
 
-    private Instant shippedOn;
+	private Instant shippedOn;
 
-    public UUID getOrderId() {
-        return orderId;
-    }
+	public UUID getOrderId() {
+		return orderId;
+	}
 
-    public void setOrderId(UUID orderId) {
-        this.orderId = orderId;
-    }
+	public void setOrderId(UUID orderId) {
+		this.orderId = orderId;
+	}
 
-    public Cart getCart() {
-        return cart;
-    }
+	public Cart getCart() {
+		return cart;
+	}
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
 
-    public OrderStatus getStatus() {
-        return status;
-    }
+	public OrderStatus getStatus() {
+		return status;
+	}
 
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
+	public void setStatus(OrderStatus status) {
+		this.status = status;
+	}
 
-    public Instant getCreatedOn() {
-        return createdOn;
-    }
+	public Instant getCreatedOn() {
+		return createdOn;
+	}
 
-    public void setCreatedOn(Instant createdOn) {
-        this.createdOn = createdOn;
-    }
+	public void setCreatedOn(Instant createdOn) {
+		this.createdOn = createdOn;
+	}
 
-    public Instant getCartConfirmedOn() {
-        return cartConfirmedOn;
-    }
+	public Instant getCartConfirmedOn() {
+		return cartConfirmedOn;
+	}
 
-    public void setCartConfirmedOn(Instant cartCompletedOn) {
-        this.cartConfirmedOn = cartCompletedOn;
-    }
+	public void setCartConfirmedOn(Instant cartCompletedOn) {
+		this.cartConfirmedOn = cartCompletedOn;
+	}
 
-    public Instant getPaymentConfirmedOn() {
-        return paymentConfirmedOn;
-    }
+	public Instant getPaymentConfirmedOn() {
+		return paymentConfirmedOn;
+	}
 
-    public void setPaymentConfirmedOn(Instant paidOn) {
-        this.paymentConfirmedOn = paidOn;
-    }
+	public void setPaymentConfirmedOn(Instant paidOn) {
+		this.paymentConfirmedOn = paidOn;
+	}
 
-    public Instant getShippedOn() {
-        return shippedOn;
-    }
+	public Instant getShippedOn() {
+		return shippedOn;
+	}
 
-    public void setShippedOn(Instant shippedOn) {
-        this.shippedOn = shippedOn;
-    }
+	public void setShippedOn(Instant shippedOn) {
+		this.shippedOn = shippedOn;
+	}
 
-    public Instant getCancelledOn() {
-        return cancelledOn;
-    }
+	public Instant getCancelledOn() {
+		return cancelledOn;
+	}
 
-    public void setCancelledOn(Instant cancelledOn) {
-        this.cancelledOn = cancelledOn;
-    }
+	public void setCancelledOn(Instant cancelledOn) {
+		this.cancelledOn = cancelledOn;
+	}
 }

@@ -8,25 +8,26 @@ import org.mapstruct.Named;
 @Mapper
 public interface ProductMappers {
 
-    String SUMMARIZED = "summarized";
+	String SUMMARIZED = "summarized";
 
-    int SUMMARY_SIZE = 16;
+	int SUMMARY_SIZE = 16;
 
-    @Mapping(source = "product", target = ".")
-    @Mapping(source = "product.description", target = "smallDescription", qualifiedByName = SUMMARIZED)
-    ProductSummaryDTO asProductSummaryDTO(Product product, boolean available);
+	@Mapping(source = "product", target = ".")
+	@Mapping(source = "product.description", target = "smallDescription", qualifiedByName = SUMMARIZED)
+	ProductSummaryDTO asProductSummaryDTO(Product product, boolean available);
 
-    @Mapping(source = "product", target = ".")
-    ProductDetailsDTO asProductDetailsDTO(Product product, boolean available);
+	@Mapping(source = "product", target = ".")
+	ProductDetailsDTO asProductDetailsDTO(Product product, boolean available);
 
-    Product asProductEntity(RegisterProductInCatalogCommand registerNewProductCommand);
+	Product asProductEntity(RegisterProductInCatalogCommand registerNewProductCommand);
 
-    @Named(SUMMARIZED)
-    default String asSummary(String source) {
-        StringBuilder builder = new StringBuilder(source.substring(0, Math.min(source.length(), SUMMARY_SIZE)));
-        if (source.length() > SUMMARY_SIZE) {
-            builder.append("...");
-        }
-        return builder.toString();
-    }
+	@Named(SUMMARIZED)
+	default String asSummary(String source) {
+		StringBuilder builder = new StringBuilder(
+				source.substring(0, Math.min(source.length(), SUMMARY_SIZE)));
+		if (source.length() > SUMMARY_SIZE) {
+			builder.append("...");
+		}
+		return builder.toString();
+	}
 }

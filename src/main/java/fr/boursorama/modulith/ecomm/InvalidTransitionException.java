@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class InvalidTransitionException extends RuntimeException {
 
-    public InvalidTransitionException(String message) {
-        super(message);
-    }
+	public InvalidTransitionException(String message) {
+		super(message);
+	}
 
 
 }

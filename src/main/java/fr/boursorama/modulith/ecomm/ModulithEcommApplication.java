@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ModulithEcommApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(ModulithEcommApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(ModulithEcommApplication.class, args);
+	}
 
 }

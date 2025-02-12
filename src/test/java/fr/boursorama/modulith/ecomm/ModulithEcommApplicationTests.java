@@ -14,27 +14,27 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class ModulithEcommApplicationTests {
 
-    @Test
-    @DisplayName("Ensure the complete application context is loaded")
-    @Disabled
-    void contextLoads() {
-    }
+	@Test
+	@DisplayName("Ensure the complete application context is loaded")
+	@Disabled
+	void contextLoads() {
+	}
 
-    @Test
-    void ensureModularityRules() {
-        ApplicationModules modules = ApplicationModules.of(ModulithEcommApplication.class);
-        modules.forEach(System.out::println);
-        modules.verify();
-    }
+	@Test
+	void ensureModularityRules() {
+		ApplicationModules modules = ApplicationModules.of(ModulithEcommApplication.class);
+		modules.forEach(System.out::println);
+		modules.verify();
+	}
 
-    @Test
-    void generateDocumentation() {
-        ApplicationModules modules = ApplicationModules.of(ModulithEcommApplication.class);
-        Documenter documenter = new Documenter(modules);
-        DiagramOptions diagramOptions = DiagramOptions.defaults();
-        CanvasOptions canvasOptions = CanvasOptions.defaults();
-        documenter.writeDocumentation(diagramOptions, canvasOptions);
-    }
+	@Test
+	void generateDocumentation() {
+		ApplicationModules modules = ApplicationModules.of(ModulithEcommApplication.class);
+		Documenter documenter = new Documenter(modules);
+		DiagramOptions diagramOptions = DiagramOptions.defaults();
+		CanvasOptions canvasOptions = CanvasOptions.defaults();
+		documenter.writeDocumentation(diagramOptions, canvasOptions);
+	}
 
 
 }
