@@ -64,4 +64,8 @@ public class OrderController {
         orderService.execute(command);
     }
 
+    public record IdDTO (
+            UUID id
+    ){
+    }
 }
