@@ -1,6 +1,6 @@
 package fr.boursorama.modulith.ecomm.catalog.internal;
 
-import fr.boursorama.modulith.ecomm.shipping.StockService;
+import fr.boursorama.modulith.ecomm.catalog.ProductAvailabilityProvider;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.UUID;
@@ -17,14 +17,14 @@ public class CatalogService {
 
 	private final ProductMappers productsMapper;
 
-	private final StockService stockService;
+	private final ProductAvailabilityProvider productAvailabilityProvider;
 
 	@Autowired
-	public CatalogService(ProductDao productDao, ProductMappers productSummaryMapper,
-			StockService stockService) {
+	public CatalogService(ProductDao productDao, ProductMappers productMappers,
+			ProductAvailabilityProvider productAvailabilityProvider) {
 		this.productDao = productDao;
-		this.productsMapper = productSummaryMapper;
-		this.stockService = stockService;
+		this.productsMapper = productMappers;
+		this.productAvailabilityProvider = productAvailabilityProvider;
 	}
 
 	public List<ProductSummaryDTO> listAllProducts() {
@@ -47,7 +47,7 @@ public class CatalogService {
 	}
 
 	private Pair<Product, Boolean> withAvailabilityInfo(Product product) {
-		boolean available = stockService.isAvailable(product.getProductId());
+		boolean available = productAvailabilityProvider.isAvailable(product.getProductId());
 		return Pair.of(product, available);
 	}
 

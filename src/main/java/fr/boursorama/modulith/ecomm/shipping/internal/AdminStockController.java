@@ -17,16 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = SecurityConfig.OPEN_API_SECURED_TAG_NAME)
 public class AdminStockController {
 
-	private final StockServiceImpl stockServiceImpl;
+	private final StockService stockService;
 
 	@Autowired
-	public AdminStockController(StockServiceImpl stockServiceImpl) {
-		this.stockServiceImpl = stockServiceImpl;
+	public AdminStockController(StockService stockService) {
+		this.stockService = stockService;
 	}
 
 	@PostMapping("/product/{productId}/stock/resupply")
 	public void resupplyStock(@PathVariable UUID productId, @RequestParam int quantity) {
-		final var command = new StockServiceImpl.ProductResupplyCommand(productId, quantity);
-		stockServiceImpl.execute(command);
+		final var command = new StockService.ProductResupplyCommand(productId, quantity);
+		stockService.execute(command);
 	}
 }

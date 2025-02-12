@@ -2,9 +2,9 @@ package fr.boursorama.modulith.ecomm.shipping.internal;
 
 
 import fr.boursorama.modulith.ecomm.InvalidTransitionException;
+import fr.boursorama.modulith.ecomm.catalog.ProductAvailabilityProvider;
 import fr.boursorama.modulith.ecomm.order.OrderConfirmedEvent;
 import fr.boursorama.modulith.ecomm.order.OrderConfirmedEvent.CartEntry;
-import fr.boursorama.modulith.ecomm.shipping.StockService;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,15 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class StockServiceImpl implements StockService {
+public class StockService implements ProductAvailabilityProvider {
 
 	@Autowired
 	private final StockEntryDao stockEntryDao;
 
-	public StockServiceImpl(StockEntryDao stockEntryDao) {
+	public StockService(StockEntryDao stockEntryDao) {
 		this.stockEntryDao = stockEntryDao;
 	}
 
+	@Override
 	public boolean isAvailable(UUID productId) {
 		return stockEntryDao.findByProductId(productId)
 				.map(stockEntry -> stockEntry.getQuantity() > 0)

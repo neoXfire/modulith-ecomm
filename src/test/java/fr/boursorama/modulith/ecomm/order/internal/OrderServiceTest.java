@@ -4,7 +4,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import fr.boursorama.modulith.ecomm.catalog.ProductService;
 import fr.boursorama.modulith.ecomm.order.internal.OrderService.InitNewOrderCommand;
-import fr.boursorama.modulith.ecomm.shipping.StockService;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
@@ -28,9 +27,6 @@ class OrderServiceTest {
 
 	@MockitoBean
 	ProductService productService;
-
-	@MockitoBean
-	StockService stockService;
 
 	@MockitoSpyBean
 	PaymentService paymentService;
