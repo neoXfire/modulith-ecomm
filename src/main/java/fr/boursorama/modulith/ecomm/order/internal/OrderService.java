@@ -3,10 +3,11 @@ package fr.boursorama.modulith.ecomm.order.internal;
 import fr.boursorama.modulith.ecomm.EntityNotFoundException;
 import fr.boursorama.modulith.ecomm.InvalidTransitionException;
 import fr.boursorama.modulith.ecomm.catalog.ProductService;
-import fr.boursorama.modulith.ecomm.shipping.StockService;
+import fr.boursorama.modulith.ecomm.order.OrderConfirmedEvent;
 import java.time.Instant;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +22,8 @@ public class OrderService {
 	private final CartItemDao cartItemDao;
 	private final ProductService productService;
 	private final PaymentService paymentService;
-	private final StockService stockService;
+	private final CartItemMapper cartItemMapper;
+	private final ApplicationEventPublisher eventPublisher;
 
 	@Autowired
 	public OrderService(CartDao cartDao,
@@ -29,13 +31,15 @@ public class OrderService {
 			CartItemDao cartItemDao,
 			ProductService productService,
 			PaymentService paymentService,
-			StockService stockService) {
+			CartItemMapper cartItemMapper,
+			ApplicationEventPublisher eventPublisher) {
 		this.cartDao = cartDao;
 		this.orderDao = orderDao;
 		this.cartItemDao = cartItemDao;
 		this.productService = productService;
 		this.paymentService = paymentService;
-		this.stockService = stockService;
+		this.cartItemMapper = cartItemMapper;
+		this.eventPublisher = eventPublisher;
 	}
 
 	public UUID execute(InitNewOrderCommand __) {
@@ -82,6 +86,12 @@ public class OrderService {
 		if (paymentHasSucceeded) {
 			order.setStatus(OrderStatus.PAYMENT_CONFIRMED);
 			order.setPaymentConfirmedOn(Instant.now());
+			final var event = new OrderConfirmedEvent(order.getOrderId(), totalPrice,
+					order.getCart().getCartEntries().stream()
+							.map(cartItemMapper::asOrderConfirmedCartEntry)
+							.toList()
+			);
+			eventPublisher.publishEvent(event);
 		} else {
 			order.setStatus(OrderStatus.PAYMENT_FAILED);
 		}
@@ -113,21 +123,6 @@ public class OrderService {
 				"Order can not be cancelled at this stage : " + order.getStatus().toString());
 		order.setStatus(OrderStatus.CANCELED);
 		order.setCancelledOn(Instant.now());
-		orderDao.save(order);
-	}
-
-	public void execute(ShipOrderCommand command) {
-		Order order = orderDao.findById(command.orderId())
-				.orElseThrow(() -> EntityNotFoundException.of("order", "orderId"));
-		ensureOrderStatusIs(order, OrderStatus.PAYMENT_CONFIRMED,
-				"The order can not be shiped because it has not been paid yet");
-		for (CartItem cartEntry : order.getCart().getCartEntries()) {
-			UUID productId = cartEntry.getProductId();
-			int quantity = cartEntry.getQuantity();
-			stockService.updateStockForShippedProduct(productId, quantity);
-		}
-		order.setShippedOn(Instant.now());
-		order.setStatus(OrderStatus.SHIPPED);
 		orderDao.save(order);
 	}
 

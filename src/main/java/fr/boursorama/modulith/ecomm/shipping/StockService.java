@@ -6,6 +6,4 @@ public interface StockService {
 
 	boolean isAvailable(UUID productId);
 
-	void updateStockForShippedProduct(UUID productId, int quantity);
-
 }
