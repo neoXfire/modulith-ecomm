@@ -8,8 +8,10 @@ import org.springframework.modulith.core.ApplicationModules;
 import org.springframework.modulith.docs.Documenter;
 import org.springframework.modulith.docs.Documenter.CanvasOptions;
 import org.springframework.modulith.docs.Documenter.DiagramOptions;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class ModulithEcommApplicationTests {
 
     @Test
