@@ -13,14 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
-public class InitDataLoader implements ApplicationRunner {
+public class InitUserDetailsDataLoader implements ApplicationRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(InitDataLoader.class);
+    private static final Logger logger = LoggerFactory.getLogger(InitUserDetailsDataLoader.class);
 
     private final UserDetailsManager userDetailsManager;
 
     @Autowired
-    public InitDataLoader(UserDetailsManager userDetailsManager) {
+    public InitUserDetailsDataLoader(UserDetailsManager userDetailsManager) {
         this.userDetailsManager = userDetailsManager;
     }
 
