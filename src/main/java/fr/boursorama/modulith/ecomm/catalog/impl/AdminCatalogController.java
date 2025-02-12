@@ -1,7 +1,9 @@
 package fr.boursorama.modulith.ecomm.catalog.impl;
 
 
+import fr.boursorama.modulith.ecomm.SecurityConfig;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +12,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/admin/catalog")
 @SecurityRequirement(name = "basicAuth")
+@Tag(name = SecurityConfig.OPEN_API_SECURED_TAG_NAME)
 public class AdminCatalogController {
 
     private final CatalogService catalogService;

@@ -22,6 +22,8 @@ import javax.sql.DataSource;
         scheme = "basic")
 public class SecurityConfig {
 
+    public static final String OPEN_API_SECURED_TAG_NAME = "admin";
+
     @Bean
     public UserDetailsManager users(DataSource dataSource) {
         return new JdbcUserDetailsManager(dataSource);
