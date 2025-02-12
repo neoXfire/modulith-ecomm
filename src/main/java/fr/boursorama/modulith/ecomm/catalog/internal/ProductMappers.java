@@ -1,6 +1,6 @@
-package fr.boursorama.modulith.ecomm.catalog.impl;
+package fr.boursorama.modulith.ecomm.catalog.internal;
 
-import fr.boursorama.modulith.ecomm.catalog.impl.CatalogService.RegisterProductInCatalogCommand;
+import fr.boursorama.modulith.ecomm.catalog.internal.CatalogService.RegisterProductInCatalogCommand;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

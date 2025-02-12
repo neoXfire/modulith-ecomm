@@ -1,4 +1,4 @@
-package fr.boursorama.modulith.ecomm.shipping.impl;
+package fr.boursorama.modulith.ecomm.shipping.internal;
 
 import fr.boursorama.modulith.ecomm.SecurityConfig;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

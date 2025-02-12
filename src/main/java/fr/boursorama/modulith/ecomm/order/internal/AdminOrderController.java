@@ -1,7 +1,7 @@
-package fr.boursorama.modulith.ecomm.order.impl;
+package fr.boursorama.modulith.ecomm.order.internal;
 
 import fr.boursorama.modulith.ecomm.SecurityConfig;
-import fr.boursorama.modulith.ecomm.order.impl.OrderService.*;
+import fr.boursorama.modulith.ecomm.order.internal.OrderService.*;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

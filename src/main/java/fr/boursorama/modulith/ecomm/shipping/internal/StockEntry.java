@@ -1,4 +1,4 @@
-package fr.boursorama.modulith.ecomm.shipping.impl;
+package fr.boursorama.modulith.ecomm.shipping.internal;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

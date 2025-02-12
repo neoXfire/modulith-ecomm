@@ -1,4 +1,4 @@
-package fr.boursorama.modulith.ecomm.shipping.impl;
+package fr.boursorama.modulith.ecomm.shipping.internal;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

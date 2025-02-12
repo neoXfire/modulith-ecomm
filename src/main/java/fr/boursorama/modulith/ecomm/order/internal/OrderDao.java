@@ -1,4 +1,4 @@
-package fr.boursorama.modulith.ecomm.catalog.impl;
+package fr.boursorama.modulith.ecomm.order.internal;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -6,8 +6,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface ProductDao extends JpaRepository<Product, UUID> {
-
-
-
+public interface OrderDao extends JpaRepository<Order, UUID> {
 }

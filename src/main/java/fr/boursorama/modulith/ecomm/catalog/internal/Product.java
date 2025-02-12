@@ -1,4 +1,4 @@
-package fr.boursorama.modulith.ecomm.catalog.impl;
+package fr.boursorama.modulith.ecomm.catalog.internal;
 
 import jakarta.persistence.*;
 
