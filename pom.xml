@@ -68,13 +68,8 @@
 		</dependency>
 
 		<dependency>
-			<artifactId>spring-modulith-starter-core</artifactId>
 			<groupId>org.springframework.modulith</groupId>
-		</dependency>
-
-		<dependency>
-			<artifactId>spring-modulith-events-core</artifactId>
-			<groupId>org.springframework.modulith</groupId>
+			<artifactId>spring-modulith-starter-jpa</artifactId>
 		</dependency>
 
 		<dependency>
