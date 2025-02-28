@@ -73,6 +73,17 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.modulith</groupId>
+			<artifactId>spring-modulith-events-kafka</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+
+		<dependency>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<groupId>org.springframework.boot</groupId>
 			<scope>test</scope>
